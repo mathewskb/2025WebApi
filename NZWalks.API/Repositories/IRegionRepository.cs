@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NZWalks.API.Models.Domain;
+using NZWalks.API.Models.DTOs.Domain;
 
 namespace NZWalks.API.Repositories
 {

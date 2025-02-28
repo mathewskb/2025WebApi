@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NZWalks.API.Models.Domain;
 using NZWalks.API.Models.DTOs;
+using NZWalks.API.Models.DTOs.Domain;
 using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
@@ -12,7 +12,7 @@ namespace NZWalks.API.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult> GetAll()
         {
             
             var regionsDomain = await regionRepository.GetAllAsync();
@@ -21,7 +21,7 @@ namespace NZWalks.API.Controllers
 
         }
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<ActionResult<RegionDto>> GetById(Guid id)
         {
             var regionDomain = await regionRepository.GetByIdAsync(id);
 
@@ -31,7 +31,7 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AddRegionRequestDto addRegionRequestDto)
+        public async Task<ActionResult<RegionDto>> Create(AddRegionRequestDto addRegionRequestDto)
         {
 
             var regionDomain = mapper.Map<Region>(addRegionRequestDto);
@@ -48,7 +48,7 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPut("{id:guid}")] // https://localhost:6001/api/Regions/943cd20b-1537-4e3e-aee4-66082bd99150
-        public async Task<IActionResult> Update(Guid id, UpdateRegionRequestDto updateRegionRequestDto)
+        public async Task<ActionResult<RegionDto>> Update(Guid id, UpdateRegionRequestDto updateRegionRequestDto)
         {
             // var regionDomain = await nZWalksDbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -67,7 +67,7 @@ namespace NZWalks.API.Controllers
 
 
         [HttpDelete("{id:guid}")] // https://localhost:6001/api/Regions/943cd20b-1537-4e3e-aee4-66082bd99150
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<ActionResult<RegionDto>> Delete(Guid id)
         {
             var region = await regionRepository.GetByIdAsync(id);
 
