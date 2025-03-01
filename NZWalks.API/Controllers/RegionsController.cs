@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Models.DTOs;
 using NZWalks.API.Models.DTOs.Domain;
 using NZWalks.API.Repositories;
@@ -14,10 +15,10 @@ namespace NZWalks.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            
+
             var regionsDomain = await regionRepository.GetAllAsync();
-                        
-             return Ok(mapper.Map<IEnumerable<RegionDto>>(regionsDomain));
+
+            return Ok(mapper.Map<IEnumerable<RegionDto>>(regionsDomain));
 
         }
         [HttpGet("{id:guid}")]
@@ -31,6 +32,7 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<ActionResult<RegionDto>> Create(AddRegionRequestDto addRegionRequestDto)
         {
 
@@ -48,8 +50,10 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPut("{id:guid}")] // https://localhost:6001/api/Regions/943cd20b-1537-4e3e-aee4-66082bd99150
+        [ValidateModel]
         public async Task<ActionResult<RegionDto>> Update(Guid id, UpdateRegionRequestDto updateRegionRequestDto)
         {
+
             // var regionDomain = await nZWalksDbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             var regionDomain = mapper.Map<Region>(updateRegionRequestDto);
@@ -63,6 +67,7 @@ namespace NZWalks.API.Controllers
             var regionDto = mapper.Map<RegionDto>(regionDomain);
 
             return Ok(regionDto);
+
         }
 
 
