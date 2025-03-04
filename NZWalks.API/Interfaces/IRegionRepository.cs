@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.DTOs.Domain;
 
-namespace NZWalks.API.Repositories
+namespace NZWalks.API.Interfaces
 {
     public interface IRegionRepository
     {

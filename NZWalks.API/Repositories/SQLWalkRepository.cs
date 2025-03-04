@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NZWalks.API.Data;
+using NZWalks.API.Interfaces;
 using NZWalks.API.Models.DTOs.Domain;
 
 namespace NZWalks.API.Repositories

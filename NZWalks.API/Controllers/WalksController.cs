@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.CustomActionFilters;
+using NZWalks.API.Interfaces;
 using NZWalks.API.Models.DTOs;
 using NZWalks.API.Models.DTOs.Domain;
-using NZWalks.API.Repositories;
 
 namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")] // api/walks
     [ApiController]
+    [Authorize]
     public class WalksController(IWalkRepository walkRepository, IMapper mapper) : ControllerBase
     {
         [HttpPost]
