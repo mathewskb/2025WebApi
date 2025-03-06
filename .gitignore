@@ -483,3 +483,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /NZWalks.API/Data/NZWalksSeedWalksRegionsDifficulties.sql
+/NZWalks.API/Images/Mathews_Baby.jpg
+/NZWalks.API/Images/Mathews_Baby.jpg.jpg
