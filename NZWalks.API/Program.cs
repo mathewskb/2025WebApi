@@ -9,10 +9,28 @@ using Microsoft.AspNetCore.Identity;
 using NZWalks.API.Interfaces;
 using NZWalks.API.Services;
 using Microsoft.Extensions.FileProviders;
+using Serilog;
+using NZWalks.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// *******************************Serilog Settings starts here*************************************
+// lgging with serilog in console - settings
+// Implementation in regions controller - by commenting below code - regions controller
+// will now log in to console by default without serilog
+
+//var logger = new LoggerConfiguration()
+//        .WriteTo.Console()
+//        .WriteTo.File("NZLogs/logmat.txt")
+//        .MinimumLevel.Information()
+//        .CreateLogger();
+
+//builder.Logging.ClearProviders();
+//builder.Logging.AddSerilog(logger);
+
+// *******************************Serilog Settings ends here*************************************
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
@@ -85,6 +103,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+// Global Exception handler
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

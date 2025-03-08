@@ -5,20 +5,28 @@ using NZWalks.API.CustomActionFilters;
 using NZWalks.API.Interfaces;
 using NZWalks.API.Models.DTOs;
 using NZWalks.API.Models.DTOs.Domain;
+using System.Text.Json;
 
 namespace NZWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegionsController(IRegionRepository regionRepository, IMapper mapper) : ControllerBase
+    public class RegionsController(IRegionRepository regionRepository,
+        IMapper mapper, ILogger<RegionsController> logger1) : ControllerBase
     {
 
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        // logging check
+        // [Authorize(Roles = "Reader")]
         public async Task<ActionResult> GetAll()
         {
+            // throw new Exception("Mathews Error");
+
+            logger1.LogInformation("Get All Method started");
 
             var regionsDomain = await regionRepository.GetAllAsync();
+
+            logger1.LogInformation($"Get All Method completed - {JsonSerializer.Serialize(regionsDomain)}");
 
             return Ok(mapper.Map<IEnumerable<RegionDto>>(regionsDomain));
 
