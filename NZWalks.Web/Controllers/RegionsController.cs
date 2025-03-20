@@ -64,5 +64,24 @@ namespace NZWalks.Web.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            ViewBag.Id = id;
+
+            //var httprequestmessage = new HttpRequestMessage()
+            //{
+            //    Method = HttpMethod.Get,
+            //    RequestUri = new Uri(config["WebAPIUrl"]?.ToString() + $"api/regions/{id}")
+            //};
+
+            var regionDto = await httpClient.GetFromJsonAsync<RegionDto>(config["WebAPIUrl"]?.ToString() + $"api/regions/{id}");
+            if(regionDto != null)
+            {
+                return View(regionDto);
+            }
+
+            return View(null);
+        }
     }
 }
