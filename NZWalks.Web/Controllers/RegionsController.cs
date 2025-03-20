@@ -65,6 +65,7 @@ namespace NZWalks.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
             ViewBag.Id = id;
@@ -82,6 +83,32 @@ namespace NZWalks.Web.Controllers
             }
 
             return View(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RegionDto regionDto)
+        {
+
+            var url = config["WebAPIUrl"]?.ToString() + $"api/regions/{regionDto.Id}";
+
+            var httprequestmessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri(config["WebAPIUrl"]?.ToString() + $"api/regions/{regionDto.Id}"),
+                Content = new StringContent(JsonSerializer.Serialize(regionDto), Encoding.UTF8, "application/json")
+            };
+
+            var httpresponsemessage = await httpClient.SendAsync(httprequestmessage);
+            httpresponsemessage.EnsureSuccessStatusCode();
+
+            var response = httpresponsemessage.Content.ReadFromJsonAsync<RegionDto>();
+
+            if (response != null)
+            {
+                return RedirectToAction("Index", "regions");
+            }
+            return View(null);
+
         }
     }
 }
